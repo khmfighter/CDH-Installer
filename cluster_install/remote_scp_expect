@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+set password [lindex $argv 0]
+set param [lindex $argv 1]
+set source [lindex $argv 2]
+set dest [lindex $argv 3]
+set timeout 10
+
+spawn scp $param $source $dest
+expect {
+    "*yes/no" { send "yes\r";exp_continue }
+    "*password:" { send "$password\r" }
+}
+send_user "executed success!"
+interact
